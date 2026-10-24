@@ -238,7 +238,32 @@ summary{padding:12px 0;font-weight:600;cursor:pointer}
 
 /* FASE 20 — laboratório de experiências interativas */
 .lab20grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:12px}.lab20card{background:rgba(28,29,30,.92);border:1px solid rgba(255,255,255,.13);border-radius:15px;padding:14px;margin:10px 0}.lab20card h3{margin:0 0 8px}.lab20val{font-size:1.45rem;font-weight:800;overflow-wrap:anywhere}.lab20canvas{width:100%;height:auto;display:block;background:#edf2fa;border-radius:10px;margin-top:10px}.lab20note{font-size:.88rem;line-height:1.5;color:#cacfd5}.lab20tag{display:inline-block;border:1px solid #777;border-radius:99px;padding:3px 9px;font-size:.75rem;margin-bottom:7px}
-.core[data-s=error] #cst{color:rgb(255,77,77)}.core[data-s=error] .lgw::after{border-color:rgb(255,77,77)}.safehint{border-color:#f5a524}</style>
+.core[data-s=error] #cst{color:rgb(255,77,77)}.core[data-s=error] .lgw::after{border-color:rgb(255,77,77)}.safehint{border-color:#f5a524}
+.by-lonix{margin-top:12px;font-size:.78rem;letter-spacing:.22em;font-weight:700;color:#e11d1d;text-shadow:0 0 10px rgba(225,29,29,.35)}
+
+/* MECA AI splash — conteúdo legível, não apenas uma barra */
+#splash{gap:0;justify-content:flex-end;padding:22px 18px calc(34px + env(safe-area-inset-bottom,0px));overflow:hidden}
+#splash .tag{font-size:clamp(.7rem,2.8vw,.95rem);line-height:1.6;letter-spacing:.16em;margin:0 0 14px;max-width:560px}
+.splash-intro{position:relative;z-index:2;width:min(560px,100%);margin:0 auto 18px;padding:18px 16px 15px;border:1px solid rgba(235,43,43,.48);border-radius:15px;background:linear-gradient(145deg,rgba(7,12,18,.88),rgba(10,10,12,.72));box-shadow:0 0 28px rgba(225,29,29,.14),inset 0 0 22px rgba(255,255,255,.025);backdrop-filter:blur(5px)}
+.splash-kicker{font-size:.62rem;letter-spacing:.22em;color:#b8c5d2}.splash-kicker span{color:#ef3434;margin:0 5px}
+.splash-intro h1{font-size:clamp(2.1rem,9vw,3.4rem);letter-spacing:.12em;line-height:1.1;margin:9px 0 8px;color:#f4f7fb;text-shadow:0 0 22px rgba(255,255,255,.12)}
+.splash-intro h1 em{font-style:normal;color:#ef3038}
+.splash-intro p{max-width:440px;margin:0 auto 15px;color:#d1d7df;font-size:clamp(.82rem,3.1vw,.98rem);line-height:1.55;letter-spacing:.015em}
+.splash-features{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;text-align:left;margin:0 auto 16px;max-width:430px}
+.splash-features span{font-size:clamp(.58rem,2.5vw,.7rem);letter-spacing:.06em;color:#e3e8ee;padding:8px 7px;border:1px solid rgba(255,255,255,.11);border-radius:7px;background:rgba(255,255,255,.035)}
+.splash-statusline{display:flex;align-items:center;gap:8px;text-align:left;border-top:1px solid rgba(255,255,255,.1);padding-top:12px;color:#f0b9b9;font-size:.7rem;letter-spacing:.04em}
+.splash-statusline i{width:7px;height:7px;flex:0 0 7px;border-radius:50%;background:#ef3038;box-shadow:0 0 10px #ef3038;animation:splashPulse 1.2s infinite}
+.splash-statusline span{flex:1;line-height:1.4}.splash-statusline b{font-size:.72rem;color:#fff;white-space:nowrap}
+@keyframes splashPulse{50%{opacity:.3;box-shadow:0 0 2px #ef3038}}
+#splash .row5{margin-bottom:14px;gap:clamp(8px,3vw,22px)}
+#splash .barw{height:12px;width:min(460px,90%)}
+#splash #sl{font-size:.72rem;letter-spacing:.17em;line-height:1.5;min-height:1.5em}
+#splash .foot{margin-top:11px;font-size:.59rem;letter-spacing:.18em;line-height:1.5}
+#splash .by-lonix{margin-top:9px}
+@media(max-height:700px){#splash{justify-content:flex-end;overflow-y:auto} .splash-intro{padding:12px;margin-bottom:12px}.splash-intro h1{font-size:2rem;margin:5px 0}.splash-intro p{font-size:.78rem;margin-bottom:9px}.splash-features{gap:5px;margin-bottom:9px}.splash-features span{padding:6px}.splash-statusline{padding-top:8px}#splash .row5{margin-bottom:9px}#splash .foot{margin-top:7px}}
+
+
+</style>
 
 <style>
 /* FASE 18: tutor passo a passo */
@@ -290,10 +315,21 @@ html,body{background:#050505!important}
 
 <section class="scr" id="splash">
   <div class="tag cap">SEU ASSISTENTE INTELIGENTE DE MECATRÓNICA</div>
+  <div class="splash-intro" hidden style="display:none">
+    <div class="splash-kicker">LONIX SYSTEMS <span>///</span> MECA CORE</div>
+    <h1>MECA <em>AI</em></h1>
+    <p>O teu espaço de trabalho para pensar, calcular, projectar e construir soluções de engenharia.</p>
+    <div class="splash-features">
+      <span>⌁ FÍSICA & MATEMÁTICA</span><span>⌘ ELECTRÓNICA</span>
+      <span>⚙ MECÂNICA</span><span>◉ ROBÓTICA & CONTROLO</span>
+    </div>
+    <div class="splash-statusline"><i></i><span id="splash-detail">A preparar o núcleo de engenharia…</span><b id="splash-percent">00%</b></div>
+  </div>
   <div class="row5" id="r1"></div>
   <div class="barw"><div id="bar"></div></div>
   <div id="sl">INICIANDO SISTEMA…</div>
   <div class="foot">ENGENHARIA · INOVAÇÃO · SEM LIMITES</div>
+  <div class="by-lonix">By LONIX</div>
 </section>
 
 <section class="scr" id="login">
@@ -434,8 +470,8 @@ html,body{background:#050505!important}
 <div class="pn" style="margin-top:10px;border:1px solid rgba(235,76,64,.35)"><b>☁️ MECA IDENTITY · Supabase Auth</b><p class="empty">As contas reais usam Supabase Auth. O endereço do projecto e a chave publicável são definidos nas constantes MECA_CONFIG no início do HTML. A chave publicável pode estar no cliente; service_role e chaves secretas nunca podem ser colocadas aqui.</p><div id="mecaSbStatus" class="pre" aria-live="polite">A verificar configuração do projecto MECA…</div><hr style="opacity:.2;margin:12px 0"><b>Conta do líder</b><label class="cl">Email<input id="mecaAuthEmail" type="email" autocomplete="email"></label><label class="cl">Palavra-passe de recuperação<input id="mecaAuthPass" type="password" autocomplete="current-password"></label><div class="btns" style="flex-wrap:wrap"><button type="button" class="go sm" id="mecaAuthIn">ENTRAR</button><button type="button" class="go sm rs" id="mecaAuthUp">CRIAR CONTA</button><button type="button" class="go sm rs" id="mecaAuthOut">SAIR</button></div></div>
 <div class="pn stat"><b>Estado real</b><ul id="cfst"></ul></div>
 <div class="pn" style="margin-top:10px"><b>Preferências</b><label class="cl">Nível de explicação<select id="cfl"><option value="iniciante">Iniciante</option><option value="universitario">Universitário</option><option value="profissional">Profissional</option></select></label><label class="cl">Modelo de IA<select id="cft"><option value="quick">Rápido</option><option value="default">Padrão</option><option value="complex">Profundo</option></select></label></div>
-<div class="pn" style="margin-top:10px"><b>Ligação segura da IA</b><p class="empty" id="kst" aria-live="polite">A chave do fornecedor nunca deve ser introduzida nesta página. A IA utiliza a Edge Function autenticada <code>meca-ai</code>; a chave Anthropic fica exclusivamente nos Secrets do servidor.</p><div class="btns" style="flex-wrap:wrap"><button class="go sm" id="kts" type="button">VERIFICAR LIGAÇÃO</button></div><p class="empty">Sem sessão Supabase autenticada, a IA do servidor não está disponível. Não existe armazenamento de chaves privadas no navegador.</p></div>
-<div class="pn" style="margin-top:10px"><b>Voz</b><label class="cl">Voz do dispositivo<select id="cvz"></select></label><label class="cl">Velocidade<input type="range" id="cvr" min="0.7" max="1.3" step="0.05"></label><div class="btns"><button class="go sm" id="cvt" type="button">TESTAR VOZ</button></div><p class="empty">As vozes vêm do teu telemóvel ou computador, sem custo e sem enviar texto a terceiros. A voz é produzida pelo navegador/dispositivo; o Gemini fornece o texto.</p></div>
+<div class="pn" style="margin-top:10px"><b>Ligação segura da IA</b><p class="empty" id="kst" aria-live="polite">A chave do fornecedor nunca deve ser introduzida nesta página. A IA utiliza a Edge Function autenticada <code>meca-ai</code>; a chave do Gemini fica exclusivamente nos Secrets do Supabase.</p><div class="btns" style="flex-wrap:wrap"><button class="go sm" id="kts" type="button">VERIFICAR LIGAÇÃO</button></div><p class="empty">Sem sessão Supabase autenticada, a IA do servidor não está disponível. Não existe armazenamento de chaves privadas no navegador.</p></div>
+<div class="pn" style="margin-top:10px"><b>Voz</b><label class="cl">Voz do dispositivo<select id="cvz"></select></label><label class="cl">Velocidade<input type="range" id="cvr" min="0.7" max="1.3" step="0.05"></label><div class="btns"><button class="go sm" id="cvt" type="button">TESTAR VOZ</button></div><p class="empty">As vozes vêm do teu telemóvel ou computador, sem custo e sem enviar texto a terceiros. A API do Claude não gera voz, até onde sei.</p></div>
 <div class="pn" style="margin-top:10px"><b>Memória</b><label class="cl"><span><input type="checkbox" id="cmon"> Memória persistente ativa (usada nas respostas da IA)</span></label><div id="cml"></div><label class="cl">Nota (ex.: "Placa preferida: ESP32")<input id="cmi" maxlength="200" autocomplete="off"></label><div class="btns" style="flex-wrap:wrap"><button class="go sm" id="cma" type="button">GUARDAR NOTA</button><button class="go sm rs" id="cmc" type="button">LIMPAR MEMÓRIA</button></div><p class="empty">Não guardes palavras-passe, chaves nem dados bancários.</p></div>
 <div class="pn" style="margin-top:10px"><b>Permissões e privacidade</b><div class="pre" id="cpr"></div><button class="go sm rs" id="cwipe" type="button">APAGAR TODOS OS DADOS DA APP</button></div>
 <div class="pn" style="margin-top:10px"><b>Atividade registada</b><div class="pre" id="clog"></div></div>
@@ -1166,10 +1202,30 @@ async function dl(){
 /* A disponibilidade de passkeys não significa que a MECA já as autentique: a validação exige backend. */
 try{const pki=$('#passkeyInfo');if(pki){const supported=!!(window.PublicKeyCredential&&navigator.credentials&&navigator.credentials.create);pki.textContent=supported?'Este navegador suporta a API de passkeys, mas a MECA ainda precisa do backend HTTPS para registar e validar a credencial com segurança.':'Este navegador não expõe a API de passkeys neste contexto. É necessário HTTPS e suporte do dispositivo; a palavra-passe continua como alternativa.'}}catch(e){}
 /* splash: verificações reais */
-async function boot(){const id=++bootId,bar=$('#bar'),lb=$('#sl');bar.style.transition='none';bar.style.width='0';await sleep(60);bar.style.transition='';
- const st=[['A VERIFICAR ARMAZENAMENTO…',storeOK],['A VERIFICAR VOZ…',TTS||!!SR],['A VERIFICAR MICROFONE…',!!(navigator.mediaDevices)],['A CARREGAR PROJETOS…',true],['SISTEMA PRONTO',true]];
- for(let i=0;i<st.length;i++){if(id!==bootId)return;lb.textContent=st[i][0];bar.style.width=((i+1)/st.length*100)+'%';await sleep(520)}
- if(id===bootId)go(session()?'dash':'login')}
+async function boot(){
+ const id=++bootId,bar=$('#bar'),lb=$('#sl'),detail=$('#splash-detail'),percent=$('#splash-percent');
+ if(!bar||!lb)return;
+ bar.style.transition='none';bar.style.width='0';if(percent)percent.textContent='00%';await sleep(100);bar.style.transition='width 1s ease';
+ const st=[
+  ['A INICIALIZAR O MECA CORE…','A preparar o núcleo de engenharia.'],
+  ['A VERIFICAR ARMAZENAMENTO…',storeOK?'Armazenamento local disponível.':'Armazenamento local limitado neste navegador.'],
+  ['A VERIFICAR MOTOR DE VOZ…',(TTS||!!SR)?'Recursos de voz detectados.':'Voz não detectada; podes continuar a usar texto.'],
+  ['A VERIFICAR MICROFONE…',navigator.mediaDevices?'Interface de microfone detectada.':'Microfone indisponível neste contexto do navegador.'],
+  ['A PREPARAR FERRAMENTAS…','Preparar cálculos, física, electrónica e mecânica.'],
+  ['A CARREGAR ÁREA DE PROJECTOS…','A preparar o espaço de trabalho e os teus projectos.'],
+  ['A VALIDAR INTERFACE…','A organizar os módulos de robótica e controlo.'],
+  ['A FINALIZAR ARRANQUE…','MECA AI — engenharia, inovação e aprendizagem.'],
+  ['SISTEMA PRONTO','Inicialização concluída. A abrir o teu espaço de trabalho.']
+ ];
+ for(let i=0;i<st.length;i++){
+  if(id!==bootId)return;
+  lb.textContent=st[i][0];if(detail)detail.textContent=st[i][1];
+  const pct=Math.round((i+1)/st.length*100);bar.style.width=pct+'%';if(percent)percent.textContent=String(pct).padStart(2,'0')+'%';
+  await sleep(i===st.length-1?1100:1050);
+ }
+ // Duração intencional de cerca de 9,5 segundos para ser possível ler os detalhes.
+ if(id===bootId){await sleep(350);if(id===bootId)go(session()?'dash':'login')}
+}
 
 /* Autenticação: Supabase Auth para contas reais; convidado é local e temporário. */
 function session(){
@@ -1316,7 +1372,7 @@ function run(t){t=t.trim();if(!t)return;$('#cmd').value='';setS('processing');co
  if(/para de falar|fica em sil[eê]ncio/.test(l)){TTS&&speechSynthesis.cancel();$('#stop').hidden=true;show(t,'Voz interrompida.');setS('idle');return}
  let r,tag;if(/est[aá]s a[ií]/.test(l))r='Estou aqui. Sempre pronto para ajudar.';else{if(sampleNS){openChat(t);return}const h=search(t);if(h.length){r=h.map(x=>'['+x.src+']\n'+x.text.slice(0,420)).join('\n\n');tag='RESPOSTA LOCAL · EXTRAÍDA DO PPC (PESQUISA POR PALAVRAS, SEM IA)'}else r='Não encontrei isso no PPC e ainda não tenho IA ligada. Comandos locais: “estás aí?”, “para de falar”, “fica em silêncio”, ou uma pergunta sobre disciplinas e regulamentos.'}
  setTimeout(()=>{show(t,r,tag);if(!tag)speak(r);if(state==='processing')setS('idle')},250)}
-$('#cf').onsubmit=e=>{e.preventDefault();run($('#cmd').value)};
+$('#cf').onsubmit=e=>{e.preventDefault();const v=$('#cmd').value;if(window.mecaCommand&&CMDV.test(v.normalize('NFD').replace(/[\u0300-\u036f]/g,''))){$('#cmd').value='';window.mecaCommand(v)}else run(v)};
 
 let rec=null,heard=null,listening=false;
 let MT=null;const micGo=(b,i)=>{if(!listening)MT={b,i};if(!SR)return fail('Reconhecimento de voz indisponível neste navegador. Usa o campo de texto.');if(listening)return rec.stop();TTS&&speechSynthesis.cancel();
@@ -1328,7 +1384,8 @@ let MT=null;const micGo=(b,i)=>{if(!listening)MT={b,i};if(!SR)return fail('Recon
  try{rec.start()}catch(e){fail('Não foi possível iniciar o microfone.')}};
 
 $('#mic').onclick=()=>micGo($('#mic'),$('#cmd'));$('#mic2').onclick=()=>micGo($('#mic2'),$('#cin'));
-const route=t=>cur==='chat'?ask(t):run(t);
+const CMDV=/^\s*(abre|abrir|vai para|vai ate|sai|sair|volta|voltar|fecha|fechar|executa|executar|corre|roda|mostra|le|ler|desce|sobe|temporizador|cancela|revis)/i;
+const route=t=>{if(window.mecaCommand&&CMDV.test(t.normalize('NFD').replace(/[\u0300-\u036f]/g,''))){$('#cmd').value='';return window.mecaCommand(t)}return cur==='chat'?ask(t):run(t)};
 /* ===== Fase 2: camada de IA ===== */
 function byokNS(){
  const cfg=window.MECA_CONFIG||{};
@@ -2071,7 +2128,7 @@ function guideView(n){const g=GUIDES[n];go('study');$('#sT').textContent='Guia �
 function aiGuide(n,txt,i){go('study');$('#sT').textContent='Guia · '+n+' (IA)';$('#sB').onclick=null;
  $('#sB').innerHTML=`<div class="chips"><span>GERADO POR IA · NÃO VERIFICADO</span></div><div class="m a" style="max-width:100%" id="gout">${fmt(txt)}</div><div class="vs" style="gap:8px"><button class="go sm" id="gre" type="button">GERAR DE NOVO</button><button class="go sm rs" id="gdel" type="button">APAGAR</button></div><p class="empty">Escrito pela IA a partir do programa oficial. Confirma fórmulas, números e soluções com o docente e com a bibliografia.</p>`;
  $('#gre').onclick=()=>genGuide(i);$('#gdel').onclick=()=>{try{localStorage.removeItem('meca_gg_'+n)}catch(e){}toast('Guia apagado.');openCourse(i)}}
-async function genGuide(i){const c=C[i];if(!sampleNS)return toast('Para gerar o guia a IA tem de estar ligada (conta Gemini configurado no servidor Supabase).');if(busy)return toast('Espera que a resposta atual termine.');
+async function genGuide(i){const c=C[i];if(!sampleNS)return toast('Para gerar o guia a IA tem de estar ligada (inicia sessão numa conta MECA; o Gemini está configurado no servidor Supabase).');if(busy)return toast('Espera que a resposta atual termine.');
  busy=true;stopped=false;go('study');$('#sT').textContent='Guia · '+c.n+' (IA)';$('#sB').onclick=null;
  $('#sB').innerHTML='<div class="chips"><span>GERADO POR IA · NÃO VERIFICADO</span></div><div class="m a" style="max-width:100%" id="gout">A gerar…</div><button class="go sm" id="gst" type="button">PARAR</button>';
  ctl=new AbortController();$('#gst').onclick=()=>{stopped=true;ctl.abort()};const to=setTimeout(()=>ctl.abort(),150000);let t='';
@@ -2893,10 +2950,48 @@ function localAnswer(q,a){
  if(typeof setS==='function'){try{setS('speaking')}catch(e){}}
 }
 
+
+/* ==== controlo do sistema pela Meca (v4): laboratórios, voltar, código, temporizador, ler ecrã ==== */
+const navStack=[];
+const VLA=[[/temporizador(es)?\s+(e|do|de)?\s*(contador|plc|ladder)|plc\s*(2|ii|dois)|contadores?\s+e\s+cilindros?|cilindro pneumatico|estrela.?triangulo|\bton\b|\btof\b|\bctu\b/,'plc2'],[/plc|ladder|automacao ladder/,'plc'],[/protoboard|placa de ensaio|breadboard/,'proto'],[/lei de ohm|\bohm\b/,'ohm'],[/circuito (serie|paralelo)|associacao de resistencias|\bcirc\b/,'circ'],[/portas logicas|logica digital|\blogic/,'logic'],[/\brc\b|\brl\b|condensador|carga do condensador|transitorio/,'rc'],[/filtro/,'filt'],[/corrente alternada|\bac\b|fasores?/,'ac'],[/trifasic|triangulo e estrela|tri\b/,'tri'],[/transformador|trafo/,'trafo'],[/inducao|motor assincrono|indm/,'indm'],[/\bpid\b|controlador/,'pid'],[/motor dc|motor de corrente continua|\bmotor\b/,'motor'],[/\badc\b|conversor analogico|sensor e adc/,'adc'],[/resposta temporal|segunda ordem|resposta ao degrau/,'resp'],[/sequencia|grafcet|\bseq\b/,'seq'],[/transmissao|engrenagens|polias/,'trans'],[/veio|\beixo\b|torcao/,'shaft'],[/mola/,'spring'],[/rampa|plano inclinado|atrito/,'ramp'],[/alavanca|momentos/,'lever'],[/cinematica|mecanismo|biela/,'kin'],[/tensao e deformacao|tracao|ensaio de tracao|\bten\b/,'ten'],[/mohr/,'mohr'],[/\bviga\b|flexao/,'beam'],[/fadiga|concentracao de tensoes|\bfec\b/,'fec'],[/campos?|campo eletrico|campo magnetico/,'campos']];
+function vlOpen(id){go('vlab');setTimeout(()=>{try{VL.show(id)}catch(e){toast('Não consegui abrir esse laboratório.')}},220);const t=(VL.titles&&VL.titles[id])||id;toast('A abrir: '+t);if(typeof speak==='function')speak('A abrir '+t+'.');return true}
+function runSandbox(code){return new Promise(res=>{let w,done=false;const fin=r=>{if(done)return;done=true;try{w&&w.terminate()}catch(e){}res(r)};
+ try{const src="self.fetch=self.XMLHttpRequest=self.WebSocket=self.importScripts=self.indexedDB=undefined;onmessage=e=>{try{const r=(0,eval)(e.data);postMessage({ok:1,r:typeof r==='object'&&r!==null?JSON.stringify(r):String(r)})}catch(err){postMessage({ok:0,r:String(err)})}}";
+ w=new Worker(URL.createObjectURL(new Blob([src],{type:'text/javascript'})));w.onmessage=e=>fin(e.data);w.onerror=e=>fin({ok:0,r:'Erro no código: '+(e.message||'desconhecido')});w.postMessage(code);setTimeout(()=>fin({ok:0,r:'Tempo excedido (2 s): o código foi interrompido.'}),2000)}catch(e){fin({ok:0,r:'Não foi possível criar o ambiente de execução neste navegador.'})}})}
+let studyTimer=null;
+function sysCommand(cmd,q){
+ /* sair / voltar sem clicar no botão */
+ if(/^(sai|sair|volta|voltar|recua|fecha|fechar)\b.*(aba|ecra|tela|secao|pagina|laboratorio|simulador|isto|disto|daqui|dai|dessa|desta|atras)|^(sai|sair|volta|voltar|recua)$|volta atras|voltar atras|sai daqui|sai dai/.test(q)){
+  let prev=null;while(navStack.length){const x=navStack.pop();if(x!==cur&&x!=='splash'&&x!=='login'){prev=x;break}}
+  const dest=prev||'dash';navStack.length=Math.max(0,navStack.length);_navSkip=true;go(dest);_navSkip=false;
+  toast('Voltei para: '+(NAVLBL[dest]||(dest==='vlab'?'Simuladores visuais':dest)));if(typeof speak==='function')speak('Feito. Voltei para '+(NAVLBL[dest]||'o ecrã anterior')+'.');return true}
+ /* abrir laboratório/simulador por nome */
+ const m=q.match(/^(?:abre|abrir|mostra|mostrar|vai para|vai ate|poe|poe-me|poe me|quero)\s+(?:o |a |os |as |um |uma )?(?:simulador|laboratorio|lab|simulacao)?\s*(?:de |do |da |dos |das )?(.+)$/);
+ if(m&&!/^(simuladores?( visuais)?|laboratorio virtual|laboratorio)$/.test(m[1].trim())){for(const[re,id]of VLA){if(re.test(m[1])&&VL.sims&&VL.sims[id])return vlOpen(id)}}
+ /* ler o ecrã */
+ if(/^(le|ler|lê)\s+(este|esta|isto|o ecra|a pagina|a secao|o que esta)/.test(q)){const sc=document.querySelector('.scr.on');const t=(sc?sc.innerText:'').replace(/\s+/g,' ').trim().slice(0,600);if(t&&typeof speak==='function'){speak(t);toast('A ler o ecrã actual.')}return true}
+ /* deslizar */
+ if(/^(desce|rola para baixo|scroll para baixo|desliza para baixo)/.test(q)){const sc=document.querySelector('.scr.on')||window;(sc.scrollBy||window.scrollBy).call(sc,{top:480,behavior:'smooth'});window.scrollBy({top:480,behavior:'smooth'});return true}
+ if(/^(sobe|rola para cima|scroll para cima|desliza para cima|vai ao topo)/.test(q)){window.scrollTo({top:0,behavior:'smooth'});const sc=document.querySelector('.scr.on');sc&&sc.scrollTo&&sc.scrollTo({top:0,behavior:'smooth'});return true}
+ /* revisão por flashcards para as provas */
+ if(/revisao|rever.*(materia|prova)|provas? de dezembro|prova trimestral/.test(q)){go('academy');setTimeout(()=>document.getElementById('acflashTopic')?.scrollIntoView({behavior:'smooth',block:'center'}),200);toast('Revisão por flashcards. Prova Trimestral: 9 a 18 de Dezembro.');if(typeof speak==='function')speak('Vamos rever por flashcards. A prova trimestral é de 9 a 18 de Dezembro.');return true}
+ /* temporizador de estudo */
+ const tm=q.match(/temporizador (?:de )?(\d+(?:[.,]\d+)?)\s*(segundos?|s|minutos?|min|horas?|h)\b/);
+ if(tm){const n=parseFloat(tm[1].replace(',','.')),u=tm[2][0],ms=n*(u==='s'?1000:u==='h'?3600000:60000);clearTimeout(studyTimer);studyTimer=setTimeout(()=>{beep(880,.25);setTimeout(()=>beep(1100,.25),300);toast('⏱ Tempo terminado!');if(typeof speak==='function')speak('Chefe, o tempo do temporizador terminou.')},ms);toast('Temporizador de '+tm[1]+' '+tm[2]+' iniciado.');if(typeof speak==='function')speak('Temporizador de '+tm[1]+' '+tm[2]+' iniciado.');return true}
+ if(/cancela.*temporizador|para o temporizador/.test(q)){clearTimeout(studyTimer);toast('Temporizador cancelado.');return true}
+ /* executar código / expressões */
+ const cx=cmd.match(/^\s*(?:executa|executar|corre|correr|roda|calcula em js|js)\s*(?:o\s+)?(?:c[oó]digo|javascript|js)?\s*[:,]?\s*(.+)$/i);
+ if(cx&&/[0-9(]|Math|const|let|=>/.test(cx[1])&&!/^c[oó]digo\s+(actual|atual)/i.test(cx[1])){
+  let code=cx[1].replace(/\^/g,'**').replace(/(\d),(\d)/g,'$1.$2').replace(/×/g,'*').replace(/÷/g,'/');
+  toast('A executar em ambiente isolado…');
+  runSandbox(code).then(r=>{const a=r.ok?'Resultado de `'+code+'` → '+r.r:'Erro ao executar `'+code+'`: '+r.r;localAnswer('▶ '+code,a)});return true}
+ return false}
+let _navSkip=false;
 /* ==== processador do comando com «Meca» ==== */
 function mecaCommand(rawCmd){
  const cmd=rawCmd.trim();if(!cmd)return;
  const q=cmd.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim();
+ try{if(sysCommand(cmd,q))return}catch(e){console.warn('sysCommand',e)}
  /* Rotas explícitas: as mais específicas devem ser avaliadas antes das genéricas. */
  if(/^(abre|vai para|vai ate|abre a|abre os|abre as)?\s*(a )?bancada de (electronica|eletronica)(.*)$/.test(q)){go('elab');toast('A abrir a Bancada de Electrónica.');if(typeof speak==='function')speak('A abrir a Bancada de Electrónica.');return}
  if(/(?:abre|vai para|vai ate)(?:\s+(?:os|as))?\s+(?:(?:universo de|montagem de)\s+)?circuitos/.test(q)||/abre circuitos/.test(q)){go('circ');return}
@@ -2953,7 +3048,7 @@ function mecaCommand(rawCmd){
  if(m){beep(880,.12);localAnswer('🎙 '+cmd,m);return}
  /* navegação */
  for(const[re,scr]of NAV_NORMALIZED){if(re.test(q)){beep(760,.1);go(scr);toast('A abrir: '+(NAVLBL[scr]||scr));if(typeof speak==='function')speak('A abrir '+(NAVLBL[scr]||scr)+'.');return}}
- /* tudo o resto vai para a IA disponível (claude.ai ou Edge Function autenticada) com contexto local */
+ /* tudo o resto vai para a IA disponível (Gemini via Edge Function autenticada) com contexto local */
  beep(880,.12);
  if(typeof ask==='function'){try{ask(cmd)}catch(e){toast('Não consegui enviar. Tenta por texto.')}}else{toast('Comando: '+cmd.slice(0,60))}
 }
@@ -3017,6 +3112,8 @@ function greetOnce(){
 const _go=go;
 window.go=function(n){_go(n);if(n==='dash'){setTimeout(greetOnce,350);setTimeout(()=>{const box=document.getElementById('tTools');if(box&&!document.getElementById('elabTile'))box.insertAdjacentHTML('beforeend','<button type="button" class="tile" id="elabTile" onclick="go(\'elab\')"><span class="ti">🔴</span><b>Bancada de Electrónica</b><small>LED · RC · Transístor · Arduino</small></button>')},80)}};
 
+const _go2=window.go;window.go=function(n){if(!_navSkip&&typeof cur==='string'&&cur!==n)navStack.push(cur);_go2(n)};
+window.mecaCommand=mecaCommand;
 /* reabertura: se já estiver no painel (sessão retomada) */
 setTimeout(()=>{try{if(typeof cur==='string'&&cur==='dash')greetOnce()}catch(e){}},1500);
 })();
@@ -3188,7 +3285,7 @@ VL.pill=function(g,x,y,t,col,font){g.save();g.textAlign='left';g.font=font||'700
 /* registo e navegação */
 VL.register=function(id,title,build){VL.sims[id]={id,build,inst:null};VL.order.push(id);VL.titles[id]=title};
 VL.fail=function(id,e){const el=$('vs_'+id);if(!el||el.querySelector('.vlerr'))return;const d=document.createElement('div');d.className='vwarn bad vlerr';d.textContent='Este simulador teve um erro: '+(e&&e.message?e.message:e)+'. Toca noutro separador e volta, ou recarrega a página.';el.insertBefore(d,el.firstChild)};
-VL.groups=[['Electricidade e electrónica',['ohm','circ','proto','logic','rc','filt','ac','tri','trafo','indm']],['Mecânica',['trans','shaft','spring','ramp','lever','kin','ten','mohr','beam']],['Controlo e automação',['pid','motor','adc','plc','resp','seq']],['Materiais e matemática',['fec','campos']]];
+VL.groups=[['Electricidade e electrónica',['ohm','circ','proto','logic','rc','filt','ac','tri','trafo','indm']],['Mecânica',['trans','shaft','spring','ramp','lever','kin','ten','mohr','beam']],['Controlo e automação',['pid','motor','adc','plc','plc2','resp','seq']],['Materiais e matemática',['fec','campos']]];
 VL.grp=null;
 VL.groupOf=id=>{const g=VL.groups.find(x=>x[1].includes(id));return g?g[0]:VL.groups[0][0]};
 VL.setGroup=function(name){VL.grp=name;const ids=(VL.groups.find(x=>x[0]===name)||VL.groups[0])[1];document.querySelectorAll('#vltabs [data-g]').forEach(b=>b.classList.toggle('on',b.dataset.g===name));document.querySelectorAll('#vltabs [data-v]').forEach(b=>{b.hidden=!ids.includes(b.dataset.v)})};
@@ -6022,6 +6119,187 @@ VL.register('campos','Campos vectoriais',function(root){
   }
   VL.wire(root,out);
   return{frame(dt){draw(dt)},show(){out()},_dbg:{get R(){return R},calc}};
+});
+})();
+
+</script>
+<script>
+/* AUTOMAÇÃO II — temporizadores (TON/TOF), contadores (CTU), arranque estrela-triângulo, cilindro pneumático com sensores e passadeira */
+(function(){
+'use strict';
+const $=id=>document.getElementById(id);
+const fe=VL.fe,fx=VL.fx,esc=VL.esc,PI=Math.PI;
+const num=id=>{const v=parseFloat($(id).value);return Number.isFinite(v)?v:0};
+const cards=(id,arr)=>{$(id).innerHTML=arr.map(x=>`<div class="vcard"><small>${x[0]}</small><b>${x[1]}</b></div>`).join('')};
+const warn=(id,cls,txt)=>{const e=$(id);e.className='vwarn '+cls;e.innerHTML=txt};
+const K={r:'#ff3b30',a:'#ffbd59',g:'#22c55e',m:'#8aa0bd',w:'#e6eef9',bg:'#0a0f17'};
+const ON='#ff6b5e',OFFC='#4a5668';
+
+VL.register('plc2','Automação: temporizadores e contadores',function(root){
+  const PROG={
+    ton:{n:'Temporizador TON (atraso à ligação)',inputs:[['Start','btn','Start']],opts:[['pt','Tempo PT',0.5,20,3,'s']],proc:'lamp',
+      rungs:[[{c:'Start'},{b:'TON',id:'T1',pt:'pt'},{k:'Lamp'}]],trace:['Start','Lamp'],et:'T1',
+      desc:'Segura Start. O temporizador só conta enquanto a entrada está ligada; quando chega ao tempo PT, a lâmpada acende. Se soltares antes, o tempo volta a zero.',
+      st:o=>`T1(IN := Start, PT := T#${o.pt}s);\nLamp := T1.Q;`},
+    tof:{n:'Temporizador TOF (luz de escada)',inputs:[['Press','btn','Botão']],opts:[['pt','Tempo ligada depois de largar',0.5,20,4,'s']],proc:'lamp',
+      rungs:[[{c:'Press'},{b:'TOF',id:'T1',pt:'pt'},{k:'Lamp'}]],trace:['Press','Lamp'],et:'T1',
+      desc:'Carrega no botão e larga: a luz liga logo e só desliga ao fim do tempo PT. É a luz de escada dos prédios.',
+      st:o=>`T1(IN := Press, PT := T#${o.pt}s);\nLamp := T1.Q;`},
+    yd:{n:'Arranque estrela-triângulo temporizado',inputs:[['Start','btn','Start'],['Stop','btn','Stop (NC)'],['F1','tog','Relé térmico F1']],opts:[['pt','Tempo em estrela',1,15,4,'s'],['pw','Potência do motor',0.75,45,7.5,'kW']],proc:'yd',
+      rungs:[
+        [{or:[[{c:'Start'}],[{c:'KM1'}]]},{c:'Stop',nc:1},{c:'F1',nc:1},{k:'KM1'}],
+        [{c:'KM1'},{b:'TON',id:'T1',pt:'pt',nocoil:1}],
+        [{c:'KM1'},{c:'T1.Q',nc:1},{c:'KM3',nc:1},{k:'KM2'}],
+        [{c:'T1.Q'},{c:'KM2',nc:1},{b:'TON',id:'T2',pt:0.15},{k:'KM3'}]],
+      trace:['Start','KM1','KM2','KM3'],et:'T1',
+      desc:'Start liga a linha KM1 (com selo) e a estrela KM2. Passado o tempo PT, KM2 desliga e, depois de um tempo morto de 0,15 s, liga o triângulo KM3. Os contactos NC cruzados impedem estrela e triângulo juntos (curto-circuito).',
+      st:o=>`KM1 := (Start OR KM1) AND NOT Stop AND NOT F1;\nT1(IN := KM1, PT := T#${o.pt}s);\nKM2 := KM1 AND NOT T1.Q AND NOT KM3;      (* estrela *)\nT2(IN := T1.Q AND NOT KM2, PT := T#150ms); (* tempo morto *)\nKM3 := T2.Q;                               (* triângulo *)`},
+    ctu:{n:'Contador de peças (CTU) numa passadeira',inputs:[['Auto','tog','Passadeira em automático'],['Reset','btn','Reset']],opts:[['pv','Peças por lote PV',1,20,5,''],['gap','Intervalo entre peças',0.6,4,1.4,'s']],proc:'conv',
+      rungs:[[{c:'Auto'},{c:'C1.Q',nc:1},{k:'M'}],[{c:'Sp'},{b:'CTU',id:'C1',pv:'pv',r:'Reset',nocoil:1}],[{c:'C1.Q'},{k:'Lamp'}]],trace:['Auto','Sp','M','Lamp'],
+      desc:'Liga o automático: a passadeira anda e as peças passam no sensor. O contador conta cada peça (flanco de subida). Quando chega a PV, a passadeira pára e acende a luz de lote completo. Reset volta a zero.',
+      st:o=>`M := Auto AND NOT C1.Q;\nC1(CU := Sp, R := Reset, PV := ${o.pv});\nLamp := C1.Q;`},
+    cyl:{n:'Cilindro pneumático A+ A− com sensores',inputs:[['Start','btn','Start (um ciclo)'],['Auto','tog','Ciclo contínuo'],['EM','tog','Paragem de emergência'],['Reset','btn','Reset contador']],opts:[['tv','Tempo de curso',0.5,5,1.5,'s'],['d','Diâmetro do êmbolo',12,100,32,'mm'],['pb','Pressão de ar',2,10,6,'bar'],['pv','Ciclos por lote PV',1,50,5,'']],proc:'cyl',
+      rungs:[[{or:[[{c:'Start'}],[{c:'Auto'}]]},{k:'Req'}],[{or:[[{c:'Req'},{c:'S1'}],[{c:'Y1'}]]},{c:'S2',nc:1},{c:'EM',nc:1},{k:'Y1'}],[{c:'S2'},{b:'CTU',id:'C1',pv:'pv',r:'Reset',nocoil:1}]],trace:['Req','Y1','S1','S2'],
+      desc:'Com o cilindro recolhido (S1), Start ou Auto energizam a válvula Y1 (selada) e o êmbolo avança. Ao tocar em S2 a válvula desliga e a mola recolhe-o. O contador conta os ciclos. Emergência corta Y1.',
+      st:o=>`Req := Start OR Auto;\nY1 := ((Req AND S1) OR Y1) AND NOT S2 AND NOT EM;   (* A+ ; mola faz A− *)\nC1(CU := S2, R := Reset, PV := ${o.pv});`}
+  };
+  let cur='ton',inp={},mem={},blk={},sens={},ET={},hist=[],acc=0,t=0,ps={},ovr=null;
+  root.innerHTML=`<div class="pn"><h3>AUTOMAÇÃO II · TEMPORIZADORES, CONTADORES E CILINDROS</h3>
+  <p class="empty">Cinco programas ladder com blocos IEC: TON, TOF, CTU, estrela-triângulo e cilindro com sensores. O PLC lê as entradas e executa o programa 20 vezes por segundo (ciclo de scan). Segura os botões ou liga os interruptores e vê a energia fluir pelo diagrama e o processo a reagir.</p>
+  ${VL.sel('pc_pg','Programa',Object.keys(PROG).map(k=>[k,PROG[k].n]),'ton')}
+  <canvas id="pc_cl" class="vcv" aria-label="Diagrama ladder"></canvas>
+  <div class="vbtns" id="pc_btns"></div>
+  <canvas id="pc_cp" class="vcv" aria-label="Processo"></canvas>
+  <div class="vwarn" id="pc_w" role="status" aria-live="polite"></div></div>
+  <div class="pn"><h3>PARÂMETROS</h3><div class="vgrid" id="pc_opts"></div><div class="vcards" id="pc_cards"></div></div>
+  <div class="pn"><h3>DIAGRAMA DE TEMPOS</h3><canvas id="pc_ct" class="vcv" aria-label="Diagrama de tempos"></canvas></div>
+  <div class="pn"><h3>CÓDIGO EQUIVALENTE (TEXTO ESTRUTURADO, IEC 61131-3)</h3><pre class="vpre" id="pc_st"></pre><p class="empty">Gerado a partir do diagrama para estudares a correspondência. Não foi compilado nem testado num PLC real; adapta os nomes de variáveis ao teu fabricante.</p></div>
+  <div class="pn"><h3>DO PAPEL À PRÁTICA</h3><div id="pc_prac"></div></div>`;
+  const cl=$('pc_cl'),cp=$('pc_cp'),ct=$('pc_ct');
+  const PR=()=>PROG[cur];
+  const optv=()=>{const o={};PR().opts.forEach(x=>{o[x[0]]=num('pc_'+x[0])});return o};
+  const val=tag=>{if(tag.indexOf('.')>0){const[b,f]=tag.split('.');return f==='Q'?!!(blk[b]&&blk[b].Q):false}if(tag in inp)return !!inp[tag];if(tag in sens)return !!sens[tag];return !!mem[tag]};
+  const closed=e=>e.nc?!val(e.c):val(e.c);
+  function runBlock(e,pw,dt,o){const id=e.id,b=blk[id]||(blk[id]={ET:0,Q:false,prev:false,CV:0});
+    if(e.b==='TON'){const pt=typeof e.pt==='number'?e.pt:o[e.pt];if(pw)b.ET=Math.min(pt,b.ET+dt);else b.ET=0;b.Q=pw&&b.ET>=pt-1e-9;b.PT=pt;return b.Q}
+    if(e.b==='TOF'){const pt=o[e.pt];if(pw){b.ET=0;b.Q=true}else{b.ET=Math.min(pt,b.ET+dt);b.Q=b.ET<pt-1e-9&&b.wasOn!==false?(b.wasOn||b.Q):false;if(b.ET>=pt-1e-9)b.Q=false}b.wasOn=pw||b.Q;b.PT=pt;return b.Q}
+    if(e.b==='CTU'){const pv=o[e.pv];if(e.r&&val(e.r))b.CV=0;else if(pw&&!b.prev&&b.CV<9999)b.CV++;b.prev=pw;b.PV=pv;b.Q=b.CV>=pv;return b.Q}
+    return pw}
+  function scan(dt){const o=optv();
+    PR().rungs.forEach(r=>{let pw=true;r.forEach(e=>{e._in=pw;
+      if(e.or){let any=false;e.or.forEach(br=>{let p=pw;br.forEach(x=>{x._in=p;if(x.c!==undefined)p=p&&closed(x);x._out=p});br._out=p;any=any||p});pw=any}
+      else if(e.c!==undefined)pw=pw&&closed(e);
+      else if(e.b)pw=runBlock(e,pw,dt,o);
+      else if(e.k!==undefined){mem[e.k]=pw}
+      e._out=pw})});
+  }
+  /* processos */
+  function procInit(){const p=PR().proc;ps={pos:0,omega:0,boxes:[],since:0,ang:0,spawn:0}}
+  function proc(dt){const o=optv(),p=PR().proc;
+    if(p==='cyl'){const sp=1/Math.max(.2,o.tv);ps.pos=Math.max(0,Math.min(1,ps.pos+(mem.Y1?sp:-sp)*dt));sens.S1=ps.pos<=.001;sens.S2=ps.pos>=.999}
+    else if(p==='conv'){const run=!!mem.M,spd=.22;if(run){ps.spawn+=dt;if(ps.spawn>=o.gap){ps.spawn=0;ps.boxes.push(0)}ps.boxes=ps.boxes.map(x=>x+spd*dt).filter(x=>x<1.08)}
+      sens.Sp=ps.boxes.some(x=>Math.abs(x-.7)<.045)}
+    else if(p==='yd'){const tgt=mem.KM1&&mem.KM3?1:mem.KM1&&mem.KM2?.62:0;ps.omega+=(tgt-ps.omega)*Math.min(1,dt*(tgt>ps.omega?.9:1.6))}
+  }
+  function buildUI(){const p=PR(),box=$('pc_btns');
+    box.innerHTML=p.inputs.map(i=>i[1]==='btn'?`<button type="button" class="vhold" data-b="${i[0]}">${i[2]} <small>(segura)</small></button>`:`<button type="button" data-t="${i[0]}">${i[2]}: desligado</button>`).join('');
+    box.querySelectorAll('.vhold').forEach(b=>{const k=b.dataset.b,dn=e=>{e.preventDefault();inp[k]=true;b.classList.add('on')},up=()=>{if(inp[k]){inp[k]=false;b.classList.remove('on')}};b.addEventListener('pointerdown',dn);['pointerup','pointerleave','pointercancel'].forEach(ev=>b.addEventListener(ev,up))});
+    box.querySelectorAll('[data-t]').forEach(b=>b.addEventListener('click',()=>{const k=b.dataset.t,l=p.inputs.find(i=>i[0]===k)[2];inp[k]=!inp[k];b.classList.toggle('on',inp[k]);b.textContent=l+': '+(inp[k]?'LIGADO':'desligado')}));
+    $('pc_opts').innerHTML=p.opts.map(x=>VL.ctl('pc_'+x[0],x[1],x[2],x[3],'any',x[4],x[5])).join('');
+  }
+  function reset(){cur=$('pc_pg').value;inp={};mem={};blk={};sens={S1:true,S2:false,Sp:false};hist=[];acc=0;t=0;PR().inputs.forEach(i=>inp[i[0]]=false);procInit();buildUI();info()}
+  function info(){const p=PR(),o=optv();$('pc_st').textContent=p.st(o);
+    let cs=[],prac='';
+    if(p.proc==='yd'){const In=o.pw*1000/(Math.sqrt(3)*400*.85*.85),ka=6.5;cs=[['Corrente nominal (400 V, aprox.)',fe(In,'A',3)],['Arranque directo (≈ 6,5·In)',fe(ka*In,'A',3)],['Arranque em estrela (1/3)',fe(ka*In/3,'A',3)],['Binário em estrela (1/3 do directo)','≈ 33 %']];
+      prac=`<h4>No quadro</h4><ul><li>3 contactores (linha KM1, estrela KM2, triângulo KM3), relé térmico F1 regulado para ${fe(In,'A',3)}, disjuntor-motor e um temporizador (ou o próprio PLC).</li><li>O motor tem de estar ligado em triângulo para a tensão da rede (placa 400 V Δ). Em estrela cada enrolamento vê só 1/√3 da tensão: por isso a corrente e o binário caem a 1/3.</li><li>Regula o tempo em estrela para o motor chegar perto da velocidade nominal (em geral 3 a 10 s). Se o tempo for curto, o salto para triângulo dá um pico de corrente quase igual ao arranque directo.</li><li>O tempo morto de 0,15 s evita que KM2 e KM3 fiquem fechados ao mesmo tempo durante a comutação (curto-circuito entre fases).</li></ul>`}
+    else if(p.proc==='cyl'){const A=PI*o.d*o.d/4*1e-6,F=o.pb*1e5*A,Fr=F*.9;cs=[['Força de avanço F = p·A',fe(F,'N',3)],['Força útil (≈ 90 %, atrito)',fe(Fr,'N',3)],['Velocidade média',fx(.1/Math.max(.2,o.tv)*0+0,1)==='0'?'curso/'+fx(o.tv,2)+' s':''],['Ciclo completo (ida e volta)',fx(2*o.tv,3)+' s']];
+      prac=`<h4>Na instalação</h4><ul><li>Válvula 5/2 monoestável com bobina Y1 e retorno por mola: se faltar a energia o cilindro recolhe sozinho (posição segura).</li><li>Sensores magnéticos (reed) nas duas extremidades dão S1 (recuado) e S2 (avançado). Sem eles o PLC não sabe onde está o êmbolo: usa sempre sensores de fim de curso ou um temporizador de segurança.</li><li>Regula a velocidade com reguladores de caudal na descarga (controlo meter-out). Com ${fx(o.pb,3)} bar e Ø${fx(o.d,3)} mm tens ${fe(F,'N',3)} de força teórica.</li><li>Dimensiona para o dobro da carga real: o atrito e a pressão de linha variam.</li></ul>`}
+    else if(p.proc==='conv'){cs=[['Peças por lote',fx(o.pv,3)],['Intervalo entre peças',fx(o.gap,3)+' s'],['Tempo para completar o lote (≈)',fx(o.pv*o.gap,3)+' s'],['Cadência',fx(60/o.gap,3)+' peças/min']];
+      prac=`<h4>Na linha</h4><ul><li>Sensor fotoeléctrico ou indutivo montado ao lado da passadeira dá o impulso Sp. O contador CTU conta flancos de subida, não o tempo que o sinal fica ligado.</li><li>Atenção ao ressalto (bounce) de sensores mecânicos e a duas peças coladas: o contador conta uma só. Em linhas rápidas usa a entrada de contagem rápida do PLC.</li><li>Ao atingir PV, o PLC pára a passadeira e sinaliza (luz ou sirene). O operador faz Reset ao trocar a caixa.</li></ul>`}
+    else{cs=[['Tempo PT',fx(o.pt,3)+' s'],['Tipo',cur==='ton'?'TON: liga depois de PT':'TOF: desliga depois de PT']];
+      prac=`<h4>Onde se usa</h4><ul><li>TON: atraso ao arranque de compressores e ventiladores, filtro de ruído de sensores (só aceita se o sinal durar PT), sequência de arranque de motores.</li><li>TOF: luz de escada, ventilação de casas de banho que fica ligada uns minutos depois de apagar a luz, pós-arrefecimento de um motor ou de um forno.</li><li>Há ainda o TP (impulso de duração fixa). Cada fabricante dá nomes e unidades diferentes (T#3s, 3000 ms).</li></ul>`}
+    cards('pc_cards',cs);$('pc_prac').innerHTML=prac+'<p class="empty">Simulação do ciclo de scan de um PLC com tempos exactos, sem atrasos de contactores nem ruído eléctrico (excepto o tempo morto indicado). Testa sempre em bancada antes de ligar a máquina real.</p>';
+  }
+  function message(){const p=PR();let cls='ok',msg=p.desc;
+    if(p.proc==='yd'){if(mem.KM2&&mem.KM3){cls='bad';msg='KM2 e KM3 fechados ao mesmo tempo: curto-circuito entre fases.'}else if(inp.F1)msg='Relé térmico disparado (F1): o contacto NC abre e tudo pára. Rearma depois de arrefecer.';else if(mem.KM3)msg='Motor em TRIÂNGULO: binário e velocidade normais, corrente de funcionamento.';else if(mem.KM2)msg=`Motor em ESTRELA: a tensão por enrolamento é 1/√3 e a corrente de arranque cai a 1/3. Passa a triângulo em ${fx(Math.max(0,optv().pt-(blk.T1?blk.T1.ET:0)),2)} s.`;else msg='Tudo parado. '+p.desc}
+    else if(p.proc==='cyl'){if(inp.EM){cls='am';msg='Emergência activa: Y1 cortada, o êmbolo recolhe pela mola.'}else if(mem.Y1)msg='A+: a válvula Y1 alimenta o êmbolo e ele avança até S2.';else if(sens.S2)msg='Em S2 (avançado): Y1 desligou, a mola recolhe o êmbolo.';else msg=`Recuado (S1). Ciclos feitos: ${blk.C1?blk.C1.CV:0}. ${p.desc}`}
+    else if(p.proc==='conv'){const b=blk.C1;if(b&&b.Q){cls='am';msg=`Lote completo: ${b.CV} peças contadas. A passadeira parou. Carrega em Reset para continuar.`}else msg=`Contagem: ${b?b.CV:0} de ${optv().pv}. ${p.desc}`}
+    else{const b=blk.T1;if(b){const lamp=mem.Lamp;msg=cur==='ton'?(lamp?'Lâmpada ligada: o temporizador chegou ao tempo PT.':b.ET>0?`A contar: ${fx(b.ET,2)} s de ${fx(b.PT,2)} s…`:p.desc):(lamp?(inp.Press?'Botão carregado: luz ligada.':`Luz ligada, desliga em ${fx(Math.max(0,b.PT-b.ET),2)} s.`):p.desc)}}
+    warn('pc_w',cls,msg)}
+  /* ---- desenho do ladder ---- */
+  function drawLadder(){const p=PR(),{g,w,h}=VL.fit(cl,Math.max(.5,Math.min(1,.2+.17*p.rungs.length)));g.fillStyle=K.bg;g.fillRect(0,0,w,h);
+    const lx=20,rx=w-20,coilW=58;let y=26;
+    const rowH=r=>{const orr=r.find(e=>e.or);return 52+(orr?(orr.or.length-1)*38:0)};
+    const tot=p.rungs.reduce((s,r)=>s+rowH(r),0);g.strokeStyle='#ff9a9a';g.lineWidth=4;g.beginPath();g.moveTo(lx,12);g.lineTo(lx,Math.min(h-4,tot+22));g.stroke();g.strokeStyle='#9fc5ff';g.beginPath();g.moveTo(rx,12);g.lineTo(rx,Math.min(h-4,tot+22));g.stroke();
+    const wire=(x1,y1,x2,y2,on)=>{g.strokeStyle=on?ON:OFFC;g.lineWidth=on?3.2:2;g.beginPath();g.moveTo(x1,y1);g.lineTo(x2,y2);g.stroke()};
+    p.rungs.forEach((r,ri)=>{const rh=rowH(r);const yy=y+rh*.3;const units=r.reduce((s,e)=>s+(e.or?Math.max(...e.or.map(b=>b.length)):e.b?1.5:e.k!==undefined?0:1),0)||1;const cell=Math.min(66,(rx-lx-coilW-20)/units);
+      let x=lx;g.fillStyle=K.m;g.font='9px system-ui';g.textAlign='left';g.fillText('R'+(ri+1),lx+4,yy-18);
+      const hasCoil=r.some(e=>e.k!==undefined);const endX=hasCoil?rx-coilW:rx-6;
+      x+=8;wire(lx,yy,x,yy,true);
+      r.forEach(e=>{
+        if(e.or){const n=Math.max(...e.or.map(b=>b.length)),wd=n*cell;const x1=x,x2=x+wd;
+          e.or.forEach((br,bi)=>{const by=yy+bi*38;let bx=x1;const on0=bi===0?e._in:e._in;wire(x1,by,bx+4,by,e._in);br.forEach(c=>{const cx=bx+cell/2;wire(bx,by,cx-8,by,c._in);contact(g,cx,by,c);wire(cx+8,by,bx+cell,by,c._out);bx+=cell});wire(bx,by,x2,by,br._out);if(bi>0){wire(x1,yy,x1,by,e._in);wire(x2,yy,x2,by,br._out)}});
+          x=x2}
+        else if(e.c!==undefined){const cx=x+cell/2;wire(x,yy,cx-8,yy,e._in);contact(g,cx,yy,e);wire(cx+8,yy,x+cell,yy,e._out);x+=cell}
+        else if(e.b){const bw=Math.min(88,cell*1.4),bh=40;wire(x,yy,x+4,yy,e._in);const on=!!(blk[e.id]&&blk[e.id].Q),b=blk[e.id]||{};g.fillStyle=on?'rgba(255,107,94,.2)':'rgba(0,0,0,.35)';g.strokeStyle=on?ON:'#6f87a8';g.lineWidth=2;g.fillRect(x+4,yy-bh/2,bw,bh);g.strokeRect(x+4,yy-bh/2,bw,bh);g.fillStyle='#fff';g.font='700 10px system-ui';g.textAlign='center';g.fillText(e.b+' '+e.id,x+4+bw/2,yy-bh/2+11);g.font='9px system-ui';g.fillStyle='#e6eef9';
+          if(e.b==='CTU'){g.fillText('CV '+(b.CV||0)+' / PV '+(b.PV!==undefined?b.PV:optv()[e.pv]),x+4+bw/2,yy+3);g.fillText('Q '+(b.Q?'1':'0'),x+4+bw/2,yy+14)}
+          else{const pt=typeof e.pt==='number'?e.pt:optv()[e.pt];g.fillText('ET '+fx(b.ET||0,2)+' / PT '+fx(pt,3)+' s',x+4+bw/2,yy+3);g.fillText('Q '+(b.Q?'1':'0'),x+4+bw/2,yy+14)}
+          wire(x+4+bw,yy,x+bw+10,yy,e._out);x+=bw+10}
+      });
+      if(hasCoil){const k=r.find(e=>e.k!==undefined);wire(x,yy,endX+10,yy,k._in);const on=!!mem[k.k];g.strokeStyle=on?'#7cff9c':'#6f87a8';g.lineWidth=2.8;g.fillStyle=on?'rgba(124,255,156,.25)':'rgba(0,0,0,.3)';g.beginPath();g.arc(endX+26,yy,13,0,7);g.fill();g.stroke();g.fillStyle=on?'#d8ffe2':'#cfe3ff';g.font='700 9px system-ui';g.textAlign='center';g.fillText(k.k,endX+26,yy+3);wire(endX+39,yy,rx,yy,on)}
+      else{wire(x,yy,rx,yy,r[r.length-1]._out)}
+      y+=rh});
+  }
+  function contact(g,cx,y,e){const cl=closed(e),nc=e.nc;g.strokeStyle=cl?ON:'#6f87a8';g.lineWidth=2.6;g.beginPath();g.moveTo(cx-6,y-10);g.lineTo(cx-6,y+10);g.moveTo(cx+6,y-10);g.lineTo(cx+6,y+10);g.stroke();if(nc){g.beginPath();g.moveTo(cx-9,y+9);g.lineTo(cx+9,y-9);g.stroke()}g.fillStyle=cl?'#ffb3ac':'#cfe3ff';g.font='600 10px system-ui';g.textAlign='center';g.fillText(e.c,cx,y-14)}
+  /* ---- processo ---- */
+  function drawProc(dt){const p=PR(),{g,w,h}=VL.fit(cp,.5);g.fillStyle=K.bg;g.fillRect(0,0,w,h);const o=optv();ps.ang+=dt;
+    if(p.proc==='lamp'){const on=!!mem.Lamp,cx=w/2,cy=h*.46;if(on){const gr=g.createRadialGradient(cx,cy,5,cx,cy,Math.min(w,h)*.5);gr.addColorStop(0,'rgba(255,220,120,.9)');gr.addColorStop(1,'rgba(255,200,80,0)');g.fillStyle=gr;g.fillRect(0,0,w,h)}
+      g.fillStyle=on?'#ffe08a':'#252c36';g.strokeStyle='#e6eef9';g.lineWidth=3;g.beginPath();g.arc(cx,cy-6,38,0,7);g.fill();g.stroke();g.fillStyle='#3b4452';g.fillRect(cx-16,cy+30,32,22);g.strokeStyle='#e6eef9';g.strokeRect(cx-16,cy+30,32,22);
+      const b=blk.T1;if(b){const f=b.PT?b.ET/b.PT:0;g.fillStyle='rgba(255,255,255,.1)';g.fillRect(cx-90,h-34,180,12);g.fillStyle=K.r;g.fillRect(cx-90,h-34,180*Math.min(1,f),12);g.fillStyle=K.w;g.font='700 11px system-ui';g.textAlign='center';g.fillText('tempo ET '+fx(b.ET,2)+' s',cx,h-40)}
+      VL.pill(g,8,8,on?'LÂMPADA LIGADA':'LÂMPADA DESLIGADA',on?K.g:K.m)}
+    else if(p.proc==='yd'){const cx=w*.34,cy=h*.5,R=Math.min(h*.34,w*.2);const star=mem.KM1&&mem.KM2,tri=mem.KM1&&mem.KM3;
+      g.strokeStyle=ps.omega>0.02?K.g:K.m;g.lineWidth=4;g.fillStyle='#101a28';g.beginPath();g.arc(cx,cy,R,0,7);g.fill();g.stroke();
+      g.save();g.translate(cx,cy);g.rotate(ps.omega*ps.ang*9);g.strokeStyle=K.a;g.lineWidth=3;for(let k=0;k<3;k++){g.beginPath();g.moveTo(0,0);g.lineTo(R*.8*Math.cos(k*2*PI/3),R*.8*Math.sin(k*2*PI/3));g.stroke()}g.restore();
+      /* ligação dos enrolamentos */
+      const bx=w*.66,by=h*.5,s=Math.min(h*.3,w*.16);const P=[[bx,by-s],[bx-s*.87,by+s*.5],[bx+s*.87,by+s*.5]];g.lineWidth=3;
+      if(star){g.strokeStyle=K.r;g.beginPath();P.forEach(q=>{g.moveTo(bx,by);g.lineTo(q[0],q[1])});g.stroke();g.fillStyle=K.r;g.beginPath();g.arc(bx,by,5,0,7);g.fill()}
+      else if(tri){g.strokeStyle=K.g;g.beginPath();g.moveTo(P[0][0],P[0][1]);g.lineTo(P[1][0],P[1][1]);g.lineTo(P[2][0],P[2][1]);g.closePath();g.stroke()}
+      else{g.strokeStyle=OFFC;g.setLineDash([4,4]);g.beginPath();g.moveTo(P[0][0],P[0][1]);g.lineTo(P[1][0],P[1][1]);g.lineTo(P[2][0],P[2][1]);g.closePath();g.stroke();g.setLineDash([])}
+      P.forEach((q,i)=>{g.fillStyle='#fff';g.beginPath();g.arc(q[0],q[1],4,0,7);g.fill();g.font='700 10px system-ui';g.textAlign='center';g.fillText(['L1','L2','L3'][i],q[0]+(i===2?14:i===1?-14:0),q[1]+(i===0?-8:14))});
+      g.fillStyle=K.w;g.font='700 12px system-ui';g.fillText(star?'ESTRELA (Y)':tri?'TRIÂNGULO (Δ)':'PARADO',bx,h-12);g.fillText('velocidade '+fx(ps.omega*100,3)+' %',cx,h-12);
+      VL.pill(g,8,8,mem.KM2&&mem.KM3?'CURTO KM2+KM3':'KM1 '+(mem.KM1?'1':'0')+' · KM2 '+(mem.KM2?'1':'0')+' · KM3 '+(mem.KM3?'1':'0'),mem.KM2&&mem.KM3?K.r:K.a)}
+    else if(p.proc==='cyl'){const x0=w*.12,x1=w*.62,cy=h*.42,bh=Math.min(46,h*.2);
+      g.fillStyle='#252c36';g.strokeStyle='#e6eef9';g.lineWidth=2;g.fillRect(x0,cy-bh/2,x1-x0,bh);g.strokeRect(x0,cy-bh/2,x1-x0,bh);
+      const stroke=(x1-x0)*.78,px=x0+10+ps.pos*(stroke-20);g.fillStyle=K.r;g.fillRect(px,cy-bh/2+3,12,bh-6);g.strokeStyle='#cfd8e3';g.lineWidth=6;g.beginPath();g.moveTo(px+12,cy);g.lineTo(x1+(px-x0)*0+ps.pos*(stroke-20)+ (x1-x0)*.2*0,cy);g.stroke();
+      const rodEnd=x1+ps.pos*(stroke-20)*.35+8;g.lineWidth=7;g.beginPath();g.moveTo(px+12,cy);g.lineTo(rodEnd,cy);g.stroke();g.fillStyle=K.a;g.fillRect(rodEnd,cy-bh/2,16,bh);
+      /* sensores */
+      [[x0+10,'S1'],[x0+stroke-10,'S2']].forEach(([sx,n])=>{const on=sens[n];g.fillStyle=on?K.g:'#2a3340';g.strokeStyle='#e6eef9';g.lineWidth=1.5;g.beginPath();g.arc(sx+6,cy-bh/2-14,7,0,7);g.fill();g.stroke();g.fillStyle=K.w;g.font='700 10px system-ui';g.textAlign='center';g.fillText(n,sx+6,cy-bh/2-26)});
+      /* válvula */
+      g.fillStyle=mem.Y1?'rgba(255,107,94,.35)':'rgba(0,0,0,.4)';g.strokeStyle=mem.Y1?ON:'#6f87a8';g.lineWidth=2.2;g.fillRect(w*.2,h*.7,w*.2,h*.18);g.strokeRect(w*.2,h*.7,w*.2,h*.18);g.fillStyle=K.w;g.font='700 11px system-ui';g.textAlign='center';g.fillText('Válvula 5/2 · Y1 '+(mem.Y1?'LIGADA':'desligada'),w*.3,h*.7+h*.1);
+      g.strokeStyle=mem.Y1?ON:'#6f87a8';g.beginPath();g.moveTo(w*.3,h*.7);g.lineTo(w*.3,cy+bh/2+4);g.lineTo(x0+14,cy+bh/2+4);g.stroke();
+      g.fillStyle=K.m;g.font='10px system-ui';g.textAlign='left';g.fillText('curso '+fx(ps.pos*100,3)+' %',x0,h-10);
+      VL.pill(g,8,8,inp.EM?'EMERGÊNCIA':sens.S2?'AVANÇADO (S2)':sens.S1?'RECUADO (S1)':mem.Y1?'A AVANÇAR':'A RECOLHER',inp.EM?K.r:K.a);
+      const b=blk.C1;VL.pill(g,w-130,8,'ciclos '+(b?b.CV:0)+' / '+o.pv,b&&b.Q?K.g:K.a)}
+    else if(p.proc==='conv'){const by=h*.55,x0=w*.06,x1=w*.94,bh=18;g.fillStyle='#252c36';g.fillRect(x0,by,x1-x0,bh);g.strokeStyle='#e6eef9';g.lineWidth=2;g.strokeRect(x0,by,x1-x0,bh);
+      for(let k=0;k<=14;k++){const x=x0+(x1-x0)*((k/14+(mem.M?ps.ang*.2:0))%1);g.strokeStyle='rgba(255,255,255,.18)';g.beginPath();g.moveTo(x,by+2);g.lineTo(x,by+bh-2);g.stroke()}
+      ps.boxes.forEach(x=>{const px=x0+(x1-x0)*x;g.fillStyle=K.a;g.strokeStyle='#fff';g.lineWidth=1.5;g.fillRect(px-14,by-26,28,26);g.strokeRect(px-14,by-26,28,26)});
+      const sx=x0+(x1-x0)*.7;g.fillStyle=sens.Sp?K.g:'#2a3340';g.strokeStyle='#e6eef9';g.fillRect(sx-5,by-62,10,16);g.strokeRect(sx-5,by-62,10,16);g.strokeStyle=sens.Sp?K.g:'rgba(255,107,94,.5)';g.setLineDash([3,3]);g.beginPath();g.moveTo(sx,by-46);g.lineTo(sx,by-10);g.stroke();g.setLineDash([]);g.fillStyle=K.w;g.font='700 10px system-ui';g.textAlign='center';g.fillText('Sp',sx,by-68);
+      const b=blk.C1;g.fillStyle='#000';g.strokeStyle=K.r;g.lineWidth=2;g.fillRect(w*.06,12,84,38);g.strokeRect(w*.06,12,84,38);g.fillStyle=K.r;g.font='700 26px ui-monospace,Menlo,monospace';g.textAlign='center';g.fillText(String(b?b.CV:0).padStart(2,'0'),w*.06+42,41);g.font='9px system-ui';g.fillStyle=K.m;g.fillText('PV = '+o.pv,w*.06+42,62);
+      VL.pill(g,w-150,8,mem.M?'PASSADEIRA A ANDAR':'PARADA',mem.M?K.g:K.a);if(mem.Lamp)VL.pill(g,w-150,36,'LOTE COMPLETO',K.g)}
+  }
+  function drawTrace(){const p=PR(),{g,w,h}=VL.fit(ct,.45+.07*p.trace.length*.5);g.fillStyle=K.bg;g.fillRect(0,0,w,h);const rows=p.trace.length+(p.et?1:0),rh=(h-22)/rows,l=64,T=30;
+    g.font='10px system-ui';g.textAlign='right';const tmax=Math.max(T,t),t0=tmax-T;g.fillStyle=K.m;
+    const X=ts=>l+(w-l-8)*(ts-t0)/T;
+    const rowsList=p.trace.map(k=>({k,an:false}));if(p.et)rowsList.push({k:'ET '+p.et,an:true});
+    rowsList.forEach((r,i)=>{const y=6+i*rh,base=y+rh-6,top=y+4;g.fillStyle='#cfe3ff';g.textAlign='right';g.fillText(r.k,l-6,y+rh/2+3);g.strokeStyle='rgba(138,160,189,.18)';g.beginPath();g.moveTo(l,base);g.lineTo(w-8,base);g.stroke();
+      g.strokeStyle=r.an?K.a:K.r;g.lineWidth=2;g.beginPath();let first=true,px=null;hist.forEach(s=>{if(s.t<t0)return;const v=r.an?(s.et||0):(s.v[r.k]?1:0),yy=base-(base-top)*v,xx=X(s.t);if(first){g.moveTo(xx,yy);first=false}else{if(!r.an)g.lineTo(xx,px);g.lineTo(xx,yy)}px=yy});g.stroke()});
+    g.fillStyle=K.m;g.textAlign='center';g.fillText('últimos 30 s',(l+w)/2,h-4)}
+  function frame(dt){acc+=dt;let n=0;while(acc>=.05&&n<8){acc-=.05;n++;t+=.05;
+      scan(.05);proc(.05);const b=PR().et&&blk[PR().et];const v={};PR().trace.forEach(k=>v[k]=val(k)||!!mem[k]);hist.push({t,v,et:b&&b.PT?b.ET/b.PT:0});if(hist.length>700)hist.shift()}
+    message();drawLadder();drawProc(dt);drawTrace()}
+  VL.wire(root,()=>info());$('pc_pg').addEventListener('change',reset);
+  reset();
+  return{frame,show(){reset()},_dbg:{get mem(){return mem},get blk(){return blk},get inp(){return inp},get sens(){return sens},get ps(){return ps},load(k){$('pc_pg').value=k;reset()},set(k,v){inp[k]=v},run(sec){const n=Math.round(sec/.05);for(let i=0;i<n;i++){t+=.05;scan(.05);proc(.05)}},setopt(k,v){const e=$('pc_'+k);e.value=v}}};
 });
 })();
 
