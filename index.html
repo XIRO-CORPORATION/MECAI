@@ -6717,7 +6717,7 @@ IMAGEM ANEXADA: ${studioImage?studioImage.name:'nenhuma'}\nFICHEIROS ANEXADOS: $
   if(!token)throw Error('Inicia sessão numa conta MECA para usar o MECA Studio. O modo convidado não tem acesso à IA do servidor.');
   let res;
   try{res=await fetch(cfg.supabaseUrl.replace(/\/$/,'')+'/functions/v1/meca-studio',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+token,apikey:cfg.supabasePublishableKey},body:JSON.stringify({prompt:promptFull,mode,language:lang,format:fmt,title:$('#mwb-dtitle').value.trim()||'Projeto MECA',sourceCode:source,image:studioImage?{mimeType:studioImage.mimeType,data:studioImage.data,name:studioImage.name}:null}),signal:(typeof AbortSignal!=='undefined'&&AbortSignal.timeout)?AbortSignal.timeout(130000):undefined})}
-  catch(netErr){if(netErr&&netErr.name==='TimeoutError')throw Error('A geração demorou demasiado. Reduz o pedido ou o código e tenta de novo.');throw Error('O pedido não chegou ao servidor: sem rede, ou a função "meca-studio" não está publicada com este nome exacto no Supabase.')}
+  catch(netErr){if(netErr&&netErr.name==='TimeoutError')throw Error('A geração demorou demasiado. Reduz o pedido ou o código e tenta de novo.');throw Error('O pedido não chegou à função meca-studio: sem rede, ou o gateway do Supabase recusou-o (em Edge Functions → meca-studio → Settings, desliga Verify JWT e publica a versão nova da função, que valida a sessão por dentro).')}
   let data={};try{data=await res.json()}catch(_){}
   if(res.status===404)throw Error('A função "meca-studio" não foi encontrada no Supabase. Publica-a em Edge Functions com este nome exacto.');
   if(res.status===401)throw Error('O servidor recusou a sessão (401). Sai e entra de novo na conta MECA.');
