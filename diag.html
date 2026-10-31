@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="pt"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Diagnóstico MECA</title>
+<style>
+:root{color-scheme:dark}body{margin:0;padding:16px;background:#070707;color:#f2f2f2;font:15px/1.5 system-ui,sans-serif}
+h1{font-size:20px;margin:0 0 6px}p{color:#a1a1a1;margin:0 0 14px}
+button{background:#e11d1d;color:#fff;border:0;border-radius:10px;padding:14px 18px;font-size:16px;font-weight:700;width:100%;margin-bottom:10px}
+button.sec{background:#2a2a2a}
+pre{background:#111;border:1px solid #3a1313;border-radius:10px;padding:12px;white-space:pre-wrap;word-break:break-word;font-size:13px;min-height:80px}
+.v{background:#1a0d0d;border:1px solid #e11d1d;border-radius:10px;padding:12px;margin-top:12px;font-size:15px}
+</style></head><body>
+<h1>Diagnóstico MECA · ligação ao servidor</h1>
+<p>Abre esta página no mesmo navegador onde usas a app, depois de entrares com a tua conta. Carrega no botão e envia-me o resultado.</p>
+<button id="go">EXECUTAR DIAGNÓSTICO</button>
+<button id="cp" class="sec">COPIAR RESULTADO</button>
+<pre id="out">Ainda não executado.</pre>
+<div class="v" id="verdict" hidden></div>
+<script>
+const U='https://nunylrdqbhmlbprajcvy.supabase.co',K='sb_publishable_hMvOeHnMBCtPyP3L8lZauQ_9xkPtniV';
+const REF=new URL(U).hostname.split('.')[0],out=document.getElementById('out'),vd=document.getElementById('verdict');
+let L=[];const log=t=>{L.push(t);out.textContent=L.join('\n')};
+function findSession(){for(const st of [localStorage,sessionStorage]){try{const raw=st.getItem('sb-'+REF+'-auth-token');if(!raw)continue;const j=JSON.parse(raw);const s=j&&j.access_token?j:(j&&j.currentSession)||null;if(s&&s.access_token)return{token:s.access_token,exp:s.expires_at||0,email:(s.user&&s.user.email)||''}}catch(e){}}return null}
+const alg=t=>{try{return JSON.parse(atob(t.split('.')[0].replace(/-/g,'+').replace(/_/g,'/'))).alg}catch(e){return '?'}};
+async function post(fn,body,token){try{const r=await fetch(U+'/functions/v1/'+fn,{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+token,apikey:K},body:JSON.stringify(body),signal:AbortSignal.timeout(40000)});let t='';try{t=(await r.text()).slice(0,140)}catch(e){}return{ok:true,status:r.status,text:t}}catch(e){return{ok:false,err:(e.name||'Erro')+': '+(e.message||'')}}}
+document.getElementById('go').onclick=async()=>{
+ L=[];vd.hidden=true;log('Início: '+new Date().toLocaleString('pt-PT'));log('Página: '+location.origin);log('Navegador: '+navigator.userAgent.slice(0,90));log('');
+ const S=findSession();
+ if(!S){log('1) Sessão: NÃO ENCONTRADA neste navegador/endereço.');vd.hidden=false;vd.textContent='Não encontrei a tua sessão. Abre a app (no mesmo endereço onde está esta página), entra com a tua conta, e volta aqui.';return}
+ const left=Math.round((S.exp*1000-Date.now())/60000);
+ log('1) Sessão: encontrada ('+(S.email||'sem email')+'), token '+alg(S.token)+', válido mais '+left+' min'+(left<0?' (EXPIRADO)':''));
+ // 2 projecto acessível
+ let health;try{const r=await fetch(U+'/auth/v1/health',{headers:{apikey:K}});health=r.status;log('2) Servidor Supabase acessível: SIM (auth/health HTTP '+r.status+')')}catch(e){health=0;log('2) Servidor Supabase acessível: NÃO ('+e.name+': '+e.message+')')}
+ // 3 função alcançável sem CORS
+ let reach=false;try{await fetch(U+'/functions/v1/meca-studio',{mode:'no-cors'});reach=true;log('3) Endereço da meca-studio alcançável (sem CORS): SIM')}catch(e){log('3) Endereço da meca-studio alcançável (sem CORS): NÃO ('+e.name+')')}
+ // 4 meca-studio com CORS, pedido vazio (falha rápido dentro da função, não usa o Gemini)
+ const a=await post('meca-studio',{prompt:''},S.token);
+ log('4) meca-studio (pedido real, com CORS): '+(a.ok?'RESPONDEU HTTP '+a.status+' '+a.text:'FALHOU '+a.err));
+ // 5 função de IA principal, para comparar
+ const b=await post('dynamic-worker',{messages:[]},S.token);
+ log('5) dynamic-worker (função do chat): '+(b.ok?'RESPONDEU HTTP '+b.status+' '+b.text.slice(0,90):'FALHOU '+b.err));
+ // veredicto
+ let v;
+ if(!health)v='O teu navegador não consegue chegar ao servidor Supabase desta rede. Testa com outros dados móveis ou Wi-Fi, e desactiva VPN, DNS privado ou bloqueadores.';
+ else if(a.ok&&a.status===404)v='A função "meca-studio" não existe com este nome no projecto. Confirma o nome em Edge Functions.';
+ else if(a.ok&&a.status===401)v='A função recusou a sessão (401). Sai da app, entra de novo e repete. Se persistir, a função ainda não é a versão nova ou o Verify JWT está a recusar o token.';
+ else if(a.ok&&a.status===503)v='A função respondeu mas não conseguiu validar a sessão no Auth (503). Repete; se persistir envia-me o resultado.';
+ else if(a.ok)v='A meca-studio RESPONDE bem a partir do navegador (HTTP '+a.status+'). A ligação e o CORS estão bons: o problema está noutro ponto da app, envia-me este resultado.';
+ else if(b.ok)v='A dynamic-worker responde mas a meca-studio é barrada antes de chegar à função (resposta sem CORS). A diferença está nas definições da meca-studio no Supabase (Verify JWT) ou na versão publicada. Envia-me este resultado.';
+ else v='As duas funções falham da mesma forma. É bloqueio de rede ou de CORS comum a todo o projecto (extensão, DNS privado, operador). Envia-me este resultado.';
+ vd.hidden=false;vd.textContent='Conclusão: '+v;L.push('');L.push('Conclusão: '+v);out.textContent=L.join('\n');
+};
+document.getElementById('cp').onclick=async()=>{try{await navigator.clipboard.writeText(out.textContent);document.getElementById('cp').textContent='COPIADO'}catch(e){const r=document.createRange();r.selectNodeContents(out);const s=getSelection();s.removeAllRanges();s.addRange(r);document.getElementById('cp').textContent='SELECCIONADO: copia manualmente'}};
+</script></body></html>
