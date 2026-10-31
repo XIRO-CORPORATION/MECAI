@@ -5,6 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>MECA AI</title>
 <meta name="theme-color" content="#070707">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./icon-192.png">
+<link rel="apple-touch-icon" href="./icon-192.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
 
 <script>
 /* MECA CONFIG: preencher apenas com URL do projecto MECA e chave PUBLICÁVEL. Nunca inserir service_role/secret. */
@@ -6553,8 +6558,8 @@ render();
 })();
 </script>
 <script>
-/* PWA: cacheia o shell e recursos visitados; autenticação/IA continuam a exigir internet. */
-try{if('serviceWorker' in navigator)navigator.serviceWorker.getRegistrations().then(r=>r.forEach(x=>x.unregister())).catch(()=>{});if(window.caches)caches.keys().then(k=>k.forEach(n=>caches.delete(n))).catch(()=>{})}catch(e){}
+/* PWA: regista o service worker para a MECA AI ser instalável e abrir sem rede (login e IA continuam a precisar de internet). */
+try{if('serviceWorker' in navigator&&location.protocol==='https:')window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}))}catch(e){}
 
 /* Fase 33 — botões de conta nas Definições (Supabase Auth real) */
 (()=>{const $i=id=>document.getElementById(id),st=(m,bad)=>{const e=$i('mecaSbStatus');if(e){e.textContent=m;e.style.color=bad?'#ffb4a8':''}};
