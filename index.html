@@ -11,7 +11,9 @@
 window.MECA_CONFIG = Object.freeze({
   supabaseUrl: "https://nunylrdqbhmlbprajcvy.supabase.co",
   supabasePublishableKey: "sb_publishable_hMvOeHnMBCtPyP3L8lZauQ_9xkPtniV",
-  aiFunctionName: "dynamic-worker"
+  aiFunctionName: "dynamic-worker",
+  /* Nome REAL (slug) da função do MECA Studio: Supabase → Edge Functions → função → Visão geral → URL, a parte depois de /functions/v1/ */
+  studioFunctionName: "dynamic-worker"
 });
 /* Remove credenciais antigas que nunca devem permanecer no navegador. */
 try {
@@ -6715,11 +6717,11 @@ IMAGEM ANEXADA: ${studioImage?studioImage.name:'nenhuma'}\nFICHEIROS ANEXADOS: $
  try{
   const sess=await client.auth.getSession();const token=sess&&sess.data&&sess.data.session?sess.data.session.access_token:null;
   if(!token)throw Error('Inicia sessão numa conta MECA para usar o MECA Studio. O modo convidado não tem acesso à IA do servidor.');
-  let res;
-  try{res=await fetch(cfg.supabaseUrl.replace(/\/$/,'')+'/functions/v1/meca-studio',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+token,apikey:cfg.supabasePublishableKey},body:JSON.stringify({prompt:promptFull,mode,language:lang,format:fmt,title:$('#mwb-dtitle').value.trim()||'Projeto MECA',sourceCode:source,image:studioImage?{mimeType:studioImage.mimeType,data:studioImage.data,name:studioImage.name}:null}),signal:(typeof AbortSignal!=='undefined'&&AbortSignal.timeout)?AbortSignal.timeout(130000):undefined})}
+  const fnName=cfg.studioFunctionName||'meca-studio';let res;
+  try{res=await fetch(cfg.supabaseUrl.replace(/\/$/,'')+'/functions/v1/'+encodeURIComponent(fnName),{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+token,apikey:cfg.supabasePublishableKey},body:JSON.stringify({prompt:promptFull,mode,language:lang,format:fmt,title:$('#mwb-dtitle').value.trim()||'Projeto MECA',sourceCode:source,image:studioImage?{mimeType:studioImage.mimeType,data:studioImage.data,name:studioImage.name}:null}),signal:(typeof AbortSignal!=='undefined'&&AbortSignal.timeout)?AbortSignal.timeout(130000):undefined})}
   catch(netErr){if(netErr&&netErr.name==='TimeoutError')throw Error('A geração demorou demasiado. Reduz o pedido ou o código e tenta de novo.');throw Error('O pedido não chegou à função meca-studio: sem rede, ou o gateway do Supabase recusou-o (em Edge Functions → meca-studio → Settings, desliga Verify JWT e publica a versão nova da função, que valida a sessão por dentro).')}
   let data={};try{data=await res.json()}catch(_){}
-  if(res.status===404)throw Error('A função "meca-studio" não foi encontrada no Supabase. Publica-a em Edge Functions com este nome exacto.');
+  if(res.status===404)throw Error('O Supabase não encontrou a função "'+fnName+'". Copia o nome real (Edge Functions → a função → Visão geral → URL, o que vem depois de /functions/v1/) para studioFunctionName no início do index.html, ou publica a função com sucesso.');
   if(res.status===401)throw Error('O servidor recusou a sessão (401). Sai e entra de novo na conta MECA.');
   if(!res.ok)throw Error((data&&(data.error||data.message))||('Falha do servidor (HTTP '+res.status+').'));
   if(data.error)throw Error(data.error);
