@@ -19,34 +19,34 @@ pre{background:#111;border:1px solid #3a1313;border-radius:10px;padding:12px;whi
 const U='https://nunylrdqbhmlbprajcvy.supabase.co',K='sb_publishable_hMvOeHnMBCtPyP3L8lZauQ_9xkPtniV';
 const REF=new URL(U).hostname.split('.')[0],out=document.getElementById('out'),vd=document.getElementById('verdict');
 let L=[];const log=t=>{L.push(t);out.textContent=L.join('\n')};
-function findSession(){for(const st of [localStorage,sessionStorage]){try{const raw=st.getItem('sb-'+REF+'-auth-token');if(!raw)continue;const j=JSON.parse(raw);const s=j&&j.access_token?j:(j&&j.currentSession)||null;if(s&&s.access_token)return{token:s.access_token,exp:s.expires_at||0,email:(s.user&&s.user.email)||''}}catch(e){}}return null}
+function findSession(){let best=null;for(const st of [localStorage,sessionStorage]){try{for(let i=0;i<st.length;i++){const k=st.key(i);if(!/^sb-.*-auth-token$/.test(k))continue;const j=JSON.parse(st.getItem(k));const s=j&&j.access_token?j:(j&&j.currentSession)||null;if(s&&s.access_token&&(!best||(s.expires_at||0)>best.exp))best={token:s.access_token,exp:s.expires_at||0,email:(s.user&&s.user.email)||'',key:k}}}catch(e){}}return best}
 const alg=t=>{try{return JSON.parse(atob(t.split('.')[0].replace(/-/g,'+').replace(/_/g,'/'))).alg}catch(e){return '?'}};
-async function post(fn,body,token){try{const r=await fetch(U+'/functions/v1/'+fn,{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+token,apikey:K},body:JSON.stringify(body),signal:AbortSignal.timeout(40000)});let t='';try{t=(await r.text()).slice(0,140)}catch(e){}return{ok:true,status:r.status,text:t}}catch(e){return{ok:false,err:(e.name||'Erro')+': '+(e.message||'')}}}
+async function call(fn,mode,token){const url=U+'/functions/v1/'+fn;let opt;
+ if(mode==='simple')opt={method:'POST',headers:{'Content-Type':'text/plain'},body:'{}'};
+ else if(mode==='apikey')opt={method:'POST',headers:{'Content-Type':'application/json',apikey:K},body:'{}'};
+ else opt={method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+token,apikey:K},body:JSON.stringify(fn==='meca-studio'?{prompt:''}:{messages:[]})};
+ try{const r=await fetch(url,Object.assign(opt,{signal:AbortSignal.timeout(40000)}));let t='';try{t=(await r.text()).slice(0,110)}catch(e){}return{ok:true,status:r.status,text:t}}catch(e){return{ok:false,err:(e.name||'Erro')+': '+(e.message||'')}}}
+const show=r=>r.ok?'RESPONDEU HTTP '+r.status+' '+r.text:'FALHOU ('+r.err+')';
 document.getElementById('go').onclick=async()=>{
- L=[];vd.hidden=true;log('Início: '+new Date().toLocaleString('pt-PT'));log('Página: '+location.origin);log('Navegador: '+navigator.userAgent.slice(0,90));log('');
- const S=findSession();
- if(!S){log('1) Sessão: NÃO ENCONTRADA neste navegador/endereço.');vd.hidden=false;vd.textContent='Não encontrei a tua sessão. Abre a app (no mesmo endereço onde está esta página), entra com a tua conta, e volta aqui.';return}
- const left=Math.round((S.exp*1000-Date.now())/60000);
- log('1) Sessão: encontrada ('+(S.email||'sem email')+'), token '+alg(S.token)+', válido mais '+left+' min'+(left<0?' (EXPIRADO)':''));
- // 2 projecto acessível
- let health;try{const r=await fetch(U+'/auth/v1/health',{headers:{apikey:K}});health=r.status;log('2) Servidor Supabase acessível: SIM (auth/health HTTP '+r.status+')')}catch(e){health=0;log('2) Servidor Supabase acessível: NÃO ('+e.name+': '+e.message+')')}
- // 3 função alcançável sem CORS
- let reach=false;try{await fetch(U+'/functions/v1/meca-studio',{mode:'no-cors'});reach=true;log('3) Endereço da meca-studio alcançável (sem CORS): SIM')}catch(e){log('3) Endereço da meca-studio alcançável (sem CORS): NÃO ('+e.name+')')}
- // 4 meca-studio com CORS, pedido vazio (falha rápido dentro da função, não usa o Gemini)
- const a=await post('meca-studio',{prompt:''},S.token);
- log('4) meca-studio (pedido real, com CORS): '+(a.ok?'RESPONDEU HTTP '+a.status+' '+a.text:'FALHOU '+a.err));
- // 5 função de IA principal, para comparar
- const b=await post('dynamic-worker',{messages:[]},S.token);
- log('5) dynamic-worker (função do chat): '+(b.ok?'RESPONDEU HTTP '+b.status+' '+b.text.slice(0,90):'FALHOU '+b.err));
- // veredicto
- let v;
- if(!health)v='O teu navegador não consegue chegar ao servidor Supabase desta rede. Testa com outros dados móveis ou Wi-Fi, e desactiva VPN, DNS privado ou bloqueadores.';
- else if(a.ok&&a.status===404)v='A função "meca-studio" não existe com este nome no projecto. Confirma o nome em Edge Functions.';
- else if(a.ok&&a.status===401)v='A função recusou a sessão (401). Sai da app, entra de novo e repete. Se persistir, a função ainda não é a versão nova ou o Verify JWT está a recusar o token.';
- else if(a.ok&&a.status===503)v='A função respondeu mas não conseguiu validar a sessão no Auth (503). Repete; se persistir envia-me o resultado.';
- else if(a.ok)v='A meca-studio RESPONDE bem a partir do navegador (HTTP '+a.status+'). A ligação e o CORS estão bons: o problema está noutro ponto da app, envia-me este resultado.';
- else if(b.ok)v='A dynamic-worker responde mas a meca-studio é barrada antes de chegar à função (resposta sem CORS). A diferença está nas definições da meca-studio no Supabase (Verify JWT) ou na versão publicada. Envia-me este resultado.';
- else v='As duas funções falham da mesma forma. É bloqueio de rede ou de CORS comum a todo o projecto (extensão, DNS privado, operador). Envia-me este resultado.';
+ L=[];vd.hidden=true;log('Início: '+new Date().toLocaleString('pt-PT'));log('Página: '+location.origin+location.pathname);log('');
+ const S=findSession();let token='';
+ if(!S)log('1) Sessão: NÃO ENCONTRADA');
+ else{const left=Math.round((S.exp*1000-Date.now())/60000);token=S.token;log('1) Sessão: '+(S.email||'?')+', token '+alg(S.token)+', '+(left<0?'EXPIRADO há '+(-left)+' min':'válido mais '+left+' min'))}
+ try{const r=await fetch(U+'/auth/v1/health',{headers:{apikey:K}});log('2) Servidor Supabase acessível: SIM (HTTP '+r.status+')')}catch(e){log('2) Servidor Supabase acessível: NÃO ('+e.name+')');vd.hidden=false;vd.textContent='Conclusão: o teu navegador não chega ao Supabase nesta rede.';L.push('Conclusão: sem acesso ao Supabase.');out.textContent=L.join('\n');return}
+ const R={};
+ for(const fn of ['meca-studio','dynamic-worker']){
+  log('');log('Função '+fn+':');
+  R[fn]={};
+  for(const [m,label] of [['simple','a) pedido simples, sem cabeçalhos especiais'],['apikey','b) pedido JSON com apikey'],['full','c) pedido completo da app (com sessão)']]){
+   R[fn][m]=await call(fn,m,token);log('   '+label+': '+show(R[fn][m]))}}
+ const st=R['meca-studio'],w=R['dynamic-worker'];let v;
+ if(!st.simple.ok&&!st.apikey.ok&&!st.full.ok)v='A meca-studio não devolve resposta legível em NENHUM dos três testes, nem o mais simples. Isso indica que a função não está a arrancar bem ou não responde com CORS. Verifica no painel se a última publicação terminou sem erro.';
+ else if(st.simple.ok&&!st.apikey.ok)v='O pedido simples passa mas o pedido com cabeçalhos (apikey) falha: o pré-pedido CORS (OPTIONS) da meca-studio está a ser recusado. O código novo da função provavelmente não está publicado.';
+ else if(st.apikey.ok&&!st.full.ok)v='Só falha quando vai a sessão (Authorization). O gateway recusa o cabeçalho Authorization para esta função.';
+ else if(st.full.ok&&st.full.status===401)v='A função alcança-se mas recusa a sessão (401). '+(S&&S.exp*1000<Date.now()?'A tua sessão está expirada: sai da app, entra de novo e repete o teste.':'Mostra-me o texto do erro acima.');
+ else if(st.full.ok)v='A meca-studio responde (HTTP '+st.full.status+') ao pedido completo. Se o Studio ainda falhar, o problema está na app e não na ligação.';
+ else v='Resultado misto. Envia-me o texto completo.';
+ if(S&&S.exp*1000<Date.now())v+=' (Atenção: sessão expirada, entra de novo na app e repete para um resultado fiável.)';
  vd.hidden=false;vd.textContent='Conclusão: '+v;L.push('');L.push('Conclusão: '+v);out.textContent=L.join('\n');
 };
 document.getElementById('cp').onclick=async()=>{try{await navigator.clipboard.writeText(out.textContent);document.getElementById('cp').textContent='COPIADO'}catch(e){const r=document.createRange();r.selectNodeContents(out);const s=getSelection();s.removeAllRanges();s.addRange(r);document.getElementById('cp').textContent='SELECCIONADO: copia manualmente'}};
