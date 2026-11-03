@@ -1,12 +1,27 @@
-/* MECA AI service worker: a app abre mesmo sem rede; com rede, usa sempre a versão mais recente. */
-const C="meca-ai-v1";
-const SHELL=["./","./index.html","./manifest.webmanifest","./icon-192.png","./icon-512.png"];
-self.addEventListener("install",e=>{e.waitUntil(caches.open(C).then(c=>c.addAll(SHELL)).catch(()=>{}));self.skipWaiting()});
-self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(n=>n!==C).map(n=>caches.delete(n)))).then(()=>self.clients.claim()))});
-self.addEventListener("fetch",e=>{
-  const r=e.request;
-  if(r.method!=="GET")return;
-  const u=new URL(r.url);
-  if(u.origin!==location.origin)return; /* Supabase, IA e fontes: nunca interceptados */
-  e.respondWith(fetch(r).then(res=>{if(res.ok){const cp=res.clone();caches.open(C).then(c=>c.put(r,cp))}return res}).catch(()=>caches.match(r).then(m=>m||caches.match("./index.html"))));
+// MECA AI — service worker. Muda o número de VERSAO sempre que publicares uma versão nova.
+const VERSAO = 'meca-v1';
+const BASE = ['./', './index.html', './manifest.webmanifest'];
+
+self.addEventListener('install', (e) => {
+  self.skipWaiting();
+  e.waitUntil(caches.open(VERSAO).then((c) => c.addAll(BASE)).catch(() => {}));
+});
+
+self.addEventListener('activate', (e) => {
+  e.waitUntil(
+    caches.keys()
+      .then((ks) => Promise.all(ks.filter((k) => k !== VERSAO).map((k) => caches.delete(k))))
+      .then(() => self.clients.claim())
+  );
+});
+
+// Primeiro tenta a internet (versão nova do GitHub); só usa a cópia guardada se estiveres sem rede.
+self.addEventListener('fetch', (e) => {
+  const r = e.request;
+  if (r.method !== 'GET' || new URL(r.url).origin !== location.origin) return;
+  e.respondWith(
+    fetch(r, { cache: 'no-cache' })
+      .then((res) => { const c = res.clone(); caches.open(VERSAO).then((x) => x.put(r, c)); return res; })
+      .catch(() => caches.match(r).then((m) => m || caches.match('./index.html')))
+  );
 });
